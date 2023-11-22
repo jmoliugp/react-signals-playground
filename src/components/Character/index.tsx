@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
 
-import { Character } from "../../entities/character";
+import { Affiliation, Character } from "../../entities/character";
 import "./index.css";
+import jediIcon from "/jediIcon.png";
+import sithIcon from "/sithLogo.png";
 
 interface SwapiGridItemProps {
   jedi?: Character;
@@ -19,19 +21,31 @@ export const GridElementCharacter: React.FC<SwapiGridItemProps> = ({
 }) => {
   const character = id <= sithCounter ? sith : jedi;
 
-  if (!character) {
+  if (!character || id < 3) {
     return (
-      <div className="gridItem">
-        <div className="loader"></div>
+      <div key={id} className="gridItem">
+        <div className="image-container">
+          <div className="loader"></div>
+        </div>
+        <h2 className="character-name">Loading...</h2>
       </div>
     );
   }
 
   const imageSrc = `./swapiCharacters/${character.id}.jpg`;
+  const affiliationLogoSrc =
+    character.affiliation === Affiliation.Jedi ? jediIcon : sithIcon;
 
   return (
     <div key={character.id} className="gridItem">
-      <img className="character-avatar" src={imageSrc} alt={character.name} />
+      <div className="image-container">
+        <img className="character-avatar" src={imageSrc} alt={character.name} />
+        <img
+          className="affiliation-logo"
+          src={affiliationLogoSrc}
+          alt="Affiliation Logo"
+        />
+      </div>
       <h2 className="character-name">{character.name}</h2>
     </div>
   );
