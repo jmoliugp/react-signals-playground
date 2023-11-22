@@ -9,7 +9,7 @@ import { GridSwapiCharacters } from "./components/Character";
 import { Character } from "./entities/character";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [sithCount, setSithCount] = useState(0);
   const [jedis, setJedis] = useState<Character[]>([]);
   const [siths, setSiths] = useState<Character[]>([]);
 
@@ -37,13 +37,17 @@ function App() {
       </div>
       <h1>Vite + React + Swapi</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={() => setSithCount((count) => count + 1)}>
+          Sith count is {sithCount}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
-        <GridSwapiCharacters jedis={jedis} siths={siths} sithCounter={count} />
+        <GridSwapiCharacters
+          jedis={jedis}
+          siths={siths}
+          sithCounter={sithCount}
+        />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
