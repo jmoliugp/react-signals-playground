@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Affiliation, Character } from "../../entities/character";
 import "./index.css";
 import jediIcon from "/jediIcon.png";
 import sithIcon from "/sithLogo.png";
+import unknownAvatar from "/unknownAvatar.png";
 
 interface SwapiGridItemProps {
   jedi?: Character;
@@ -13,40 +13,48 @@ interface SwapiGridItemProps {
   id: number;
 }
 
-export const GridElementCharacter: React.FC<SwapiGridItemProps> = ({
-  id,
-  jedi,
-  sith,
-  sithCounter,
-}) => {
-  const character = id <= sithCounter ? sith : jedi;
+const useCharacter = ({ id, sithCounter, jedi, sith }: SwapiGridItemProps) => {
+  const [character, setCharacter] = useState<Character | undefined>(undefined);
 
-  if (!character || id < 3) {
-    return (
-      <div key={id} className="gridItem">
-        <div className="image-container">
-          <div className="loader"></div>
-        </div>
-        <h2 className="character-name">Loading...</h2>
-      </div>
-    );
-  }
+  const minDelay = 100;
+  const maxDelay = 2000;
+  const delay =
+    Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
 
-  const imageSrc = `./swapiCharacters/${character.id}.jpg`;
-  const affiliationLogoSrc =
-    character.affiliation === Affiliation.Jedi ? jediIcon : sithIcon;
+  useEffect(() => {
+    setCharacter(undefined);
+    setTimeout(() => {
+      const newCharacter = id <= sithCounter ? sith : jedi;
+      setCharacter(newCharacter);
+    }, delay);
+  }, [id, sithCounter, jedi, sith, delay]);
+
+  return character;
+};
+
+export const GridElementCharacter: React.FC<SwapiGridItemProps> = (props) => {
+  const character = useCharacter(props);
+
+  const imageSrc = character
+    ? `./swapiCharacters/${character.id}.jpg`
+    : unknownAvatar;
+  const title = character ? character.name : "Loading...";
 
   return (
-    <div key={character.id} className="gridItem">
+    <div key={props.id} className="gridItem">
       <div className="image-container">
-        <img className="character-avatar" src={imageSrc} alt={character.name} />
-        <img
-          className="affiliation-logo"
-          src={affiliationLogoSrc}
-          alt="Affiliation Logo"
-        />
+        <img className="character-avatar" src={imageSrc} alt={title} />
+        {character && (
+          <img
+            className="affiliation-logo"
+            src={
+              character.affiliation === Affiliation.Jedi ? jediIcon : sithIcon
+            }
+            alt="Affiliation Logo"
+          />
+        )}
       </div>
-      <h2 className="character-name">{character.name}</h2>
+      <h2 className="character-name">{title}</h2>
     </div>
   );
 };
