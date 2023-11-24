@@ -5,7 +5,7 @@ import soloWarsLogo from "/soloWarsLogo.png";
 import "./App.css";
 
 import { getJediAndSithIds } from "./utils/getJedisAndSiths";
-import { GridSwapiCharacters } from "./components/Character";
+import { CharactersGrid } from "./components/CharactersGrid";
 import { Character } from "./entities/character";
 
 function App() {
@@ -43,14 +43,10 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
-        <GridSwapiCharacters
-          jedis={jedis}
-          siths={siths}
-          sithCounter={sithCount}
-        />
+        <CharactersGrid jedis={jedis} siths={siths} sithCounter={sithCount} />
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Click on the Vite, React and SWAPI logos to learn more
       </p>
     </>
   );
