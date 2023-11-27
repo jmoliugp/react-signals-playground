@@ -3,6 +3,7 @@ import React from "react";
 import { Character } from "../../entities/character";
 import { CharacterProps, CharacterSwapi } from "./Character";
 import "./index.css";
+import { Profiler } from "../Profiler";
 
 interface GridSwapiCharactersProps {
   jedis: Character[];
@@ -31,7 +32,9 @@ export const CharactersGrid: React.FC<GridSwapiCharactersProps> = ({
   return (
     <div className="gridContainer">
       {gridItems.map((props) => (
-        <CharacterSwapi key={props.id} {...props} />
+        <Profiler id={`Character grid`}>
+          <CharacterSwapi key={props.id} {...props} />
+        </Profiler>
       ))}
     </div>
   );

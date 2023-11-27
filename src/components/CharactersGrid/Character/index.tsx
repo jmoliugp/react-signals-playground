@@ -40,8 +40,8 @@ const useCharacter = ({ id, sithCounter, jedi, sith }: CharacterProps) => {
 };
 
 const expensiveCalculation = () => {
-  const minDelay = 100;
-  const maxDelay = 400;
+  const minDelay = 4;
+  const maxDelay = 40;
   const delay =
     Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
 
@@ -53,7 +53,7 @@ const expensiveCalculation = () => {
 
 export const CharacterSwapi: React.FC<CharacterProps> = (props) => {
   const character = useCharacter(props);
-  expensiveCalculation();
+  // expensiveCalculation();
 
   const imageSrc = character
     ? `./swapiCharacters/${character.id}.jpg`
@@ -61,7 +61,7 @@ export const CharacterSwapi: React.FC<CharacterProps> = (props) => {
   const title = character ? character.name : "Loading...";
 
   return (
-    <Profiler id="Character">
+    <Profiler id={`Character ${props.id}`}>
       <div key={props.id} className="gridItem">
         <div className="image-container">
           <img className="character-avatar" src={imageSrc} alt={title} />
