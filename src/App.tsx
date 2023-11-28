@@ -37,9 +37,18 @@ function App() {
       </div>
       <h1>Vite + React + Swapi</h1>
       <div className="card">
-        <button onClick={() => setSithCount((count) => count + 1)}>
-          Sith count is {sithCount}
-        </button>
+        <div className="counter-container">
+          <button
+            onClick={() => setSithCount((count) => count - 1)}
+            disabled={sithCount <= 0}
+          >
+            -
+          </button>
+          <button onClick={() => setSithCount((count) => count + 1)}>
+            Sith count is {sithCount}
+          </button>
+          <button onClick={() => setSithCount((count) => count + 1)}>+</button>
+        </div>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
