@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { Affiliation, Character } from "../../../entities/character";
@@ -14,34 +15,9 @@ export interface CharacterProps {
   id: number;
 }
 
-const useCharacter = ({ id, sithCounter, jedi, sith }: CharacterProps) => {
-  const [character, setCharacter] = useState<Character | undefined>(undefined);
-
-  const minDelay = 100;
-  const maxDelay = 4000;
-  const delay =
-    Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-
-  useEffect(() => {
-    const currCharacter = id <= sithCounter ? sith : jedi;
-    const isNewCharacter = currCharacter !== character;
-    if (isNewCharacter) {
-      setCharacter(undefined);
-    }
-
-    setTimeout(() => {
-      // setCharacter(undefined);
-      const newCharacter = id <= sithCounter ? sith : jedi;
-      setCharacter(newCharacter);
-    }, delay);
-  }, [id, sithCounter, jedi, sith, delay, character]);
-
-  return character;
-};
-
 const expensiveCalculation = () => {
   const minDelay = 4;
-  const maxDelay = 40;
+  const maxDelay = 10;
   const delay =
     Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
 
@@ -51,9 +27,33 @@ const expensiveCalculation = () => {
   }
 };
 
-export const CharacterSwapi: React.FC<CharacterProps> = (props) => {
-  const character = useCharacter(props);
-  // expensiveCalculation();
+export const CharacterSwapi: React.FC<CharacterProps> = ({
+  id,
+  sithCounter,
+  jedi,
+  sith,
+}) => {
+  expensiveCalculation();
+  const [character, setCharacter] = useState<Character | undefined>();
+
+  // Simulate a complex calculation for the character.
+  const complexCharacterCalculation = () => {
+    const minDelay = 4;
+    const maxDelay = 10;
+    const delay =
+      Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+
+    const start = Date.now();
+    while (Date.now() - start < delay) {
+      // Loop to force a delay.
+    }
+
+    return id <= sithCounter ? sith : jedi;
+  };
+
+  useEffect(() => {
+    setCharacter(complexCharacterCalculation());
+  }, [sithCounter]);
 
   const imageSrc = character
     ? `./swapiCharacters/${character.id}.jpg`
@@ -61,8 +61,8 @@ export const CharacterSwapi: React.FC<CharacterProps> = (props) => {
   const title = character ? character.name : "Loading...";
 
   return (
-    <Profiler id={`Character ${props.id}`}>
-      <div key={props.id} className="gridItem">
+    <Profiler id={`Character ${id}`} disabled={id !== 2}>
+      <div key={id} className="gridItem">
         <div className="image-container">
           <img className="character-avatar" src={imageSrc} alt={title} />
           {character && (
