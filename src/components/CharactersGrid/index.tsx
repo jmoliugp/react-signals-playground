@@ -30,12 +30,12 @@ export const CharactersGrid: React.FC<GridSwapiCharactersProps> = ({
   );
 
   return (
-    <div className="gridContainer">
-      {gridItems.map((props) => (
-        <Profiler id={`Character grid`}>
+    <Profiler id={`Character grid`}>
+      <div className="gridContainer">
+        {gridItems.map((props) => (
           <CharacterSwapi key={props.id} {...props} />
-        </Profiler>
-      ))}
-    </div>
+        ))}
+      </div>
+    </Profiler>
   );
 };

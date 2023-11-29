@@ -1,28 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Affiliation, Character, CharacterRaw } from "../entities/character";
 
-const jedisKnownNames = [
-  "Luke Skywalker",
-  "Obi-Wan Kenobi",
-  "Yoda",
-  "Anakin Skywalker",
-  "Mace Windu",
-  "Qui-Gon Jinn",
-  "Ahsoka Tano",
-  "Ki-Adi-Mundi",
-  "Shaak Ti",
-  "Kit Fisto",
-  "Plo Koon",
-  "Kanan Jarrus",
-  "Ezra Bridger",
-  "Luminara Unduli",
-  "Aayla Secura",
-  "Rey",
-  "Cal Kestis",
-  "Adi Gallia",
-  "Eeth Koth",
-  "Depa Billaba",
-];
 const sithsKnownNames = [
   "Darth",
   "Darth Vader",

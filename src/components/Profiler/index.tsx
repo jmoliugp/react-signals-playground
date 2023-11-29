@@ -5,10 +5,20 @@ interface Props {
   id: string;
   onRender?: React.ProfilerOnRenderCallback;
   children: React.ReactNode;
+  disabled?: boolean;
 }
 
-export const Profiler: React.FC<Props> = ({ children, onRender, id }) => {
+export const Profiler: React.FC<Props> = ({
+  children,
+  disabled,
+  onRender,
+  id,
+}) => {
   const { printMetrics } = useOnRender();
+
+  if (disabled) {
+    return <>{children}</>;
+  }
 
   const onRenderWithPrints: React.ProfilerOnRenderCallback = (...args) => {
     printMetrics(...args);
