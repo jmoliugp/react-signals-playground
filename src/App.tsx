@@ -10,15 +10,17 @@ import { Character } from "./entities/character";
 
 function App() {
   const [sithCount, setSithCount] = useState(0);
-  const [jedis, setJedis] = useState<Character[]>([]);
-  const [siths, setSiths] = useState<Character[]>([]);
+  const [characters, setCharacters] = useState<[Character[], Character[]]>([
+    [],
+    [],
+  ]);
+  const [jedis, siths] = characters;
 
   useEffect(() => {
     (async () => {
       const { jedis, siths } = await getJediAndSithIds();
 
-      setJedis(jedis);
-      setSiths(siths);
+      setCharacters([jedis, siths]);
     })();
   }, []);
 
