@@ -60,16 +60,16 @@ async function fetchAllCharacters(): Promise<Character[]> {
 }
 
 export async function getJediAndSithIds(): Promise<{
-  jedis: Character[];
-  siths: Character[];
+  jedisRes: Character[];
+  sithsRes: Character[];
 }> {
   const characters = await fetchAllCharacters();
-  const jedis = characters.filter(
+  const jedisRes = characters.filter(
     (character) => character.affiliation === Affiliation.Jedi
   );
-  const siths = characters.filter(
+  const sithsRes = characters.filter(
     (character) => character.affiliation === Affiliation.Sith
   );
 
-  return { jedis, siths };
+  return { jedisRes, sithsRes };
 }

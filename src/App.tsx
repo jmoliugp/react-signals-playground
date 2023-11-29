@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import soloWarsLogo from "/soloWarsLogo.png";
@@ -6,19 +6,19 @@ import "./App.css";
 
 import { getJediAndSithIds } from "./utils/getJedisAndSiths";
 import { CharactersGrid } from "./components/CharactersGrid";
-import { Character } from "./entities/character";
+
+import { batch } from "@preact/signals-react";
+import { jedis, sithCount, siths } from "./sharedSignals";
 
 function App() {
-  const [sithCount, setSithCount] = useState(0);
-  const [jedis, setJedis] = useState<Character[]>([]);
-  const [siths, setSiths] = useState<Character[]>([]);
-
   useEffect(() => {
     (async () => {
-      const { jedis, siths } = await getJediAndSithIds();
+      const { jedisRes, sithsRes } = await getJediAndSithIds();
 
-      setJedis(jedis);
-      setSiths(siths);
+      batch(() => {
+        jedis.value = jedisRes;
+        siths.value = sithsRes;
+      });
     })();
   }, []);
 
@@ -39,20 +39,20 @@ function App() {
       <div className="card">
         <div className="counter-container">
           <button
-            onClick={() => setSithCount((count) => count - 1)}
-            disabled={sithCount <= 0}
+            onClick={() => (sithCount.value -= 1)}
+            disabled={sithCount.value <= 0}
           >
             -
           </button>
-          <button onClick={() => setSithCount((count) => count + 1)}>
+          <button onClick={() => (sithCount.value += 1)}>
             Sith count is {sithCount}
           </button>
-          <button onClick={() => setSithCount((count) => count + 1)}>+</button>
+          <button onClick={() => (sithCount.value += 1)}>+</button>
         </div>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
-        <CharactersGrid jedis={jedis} siths={siths} sithCounter={sithCount} />
+        <CharactersGrid />
       </div>
       <p className="read-the-docs">
         Click on the Vite, React and SWAPI logos to learn more
