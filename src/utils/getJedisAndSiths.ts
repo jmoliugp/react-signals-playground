@@ -53,8 +53,9 @@ async function fetchAllCharacters(): Promise<Character[]> {
       : Affiliation.Jedi;
     const id = characterRaw.url.split("/").slice(-2, -1)[0];
     const name = characterRaw.name;
+    const image = `./swapiCharacters/${id}.jpg`;
 
-    return { affiliation, id, name };
+    return { affiliation, image, id, name };
   });
 }
 

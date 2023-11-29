@@ -2,6 +2,7 @@ export interface Character {
   id: string;
   name: string;
   affiliation: Affiliation;
+  image: string;
 }
 
 export interface CharacterRaw {

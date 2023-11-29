@@ -55,10 +55,10 @@ export const CharacterSwapi: React.FC<CharacterProps> = ({
     setCharacter(complexCharacterCalculation());
   }, [sithCounter]);
 
-  const imageSrc = character
-    ? `./swapiCharacters/${character.id}.jpg`
-    : unknownAvatar;
   const title = character ? character.name : "Loading...";
+  const imageSrc = character ? character.image : unknownAvatar;
+  const iconSrc =
+    character?.affiliation === Affiliation.Jedi ? jediIcon : sithIcon;
 
   return (
     <Profiler id={`Character ${id}`} disabled={id !== 2}>
@@ -68,9 +68,7 @@ export const CharacterSwapi: React.FC<CharacterProps> = ({
           {character && (
             <img
               className="affiliation-logo"
-              src={
-                character.affiliation === Affiliation.Jedi ? jediIcon : sithIcon
-              }
+              src={iconSrc}
               alt="Affiliation Logo"
             />
           )}
