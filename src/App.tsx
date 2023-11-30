@@ -50,7 +50,7 @@ function App() {
           <button onClick={() => setSithCount((count) => count + 1)}>+</button>
         </div>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Play around with <code>src/App.tsx</code> to test signals
         </p>
         <CharactersGrid jedis={jedis} siths={siths} sithCounter={sithCount} />
       </div>
