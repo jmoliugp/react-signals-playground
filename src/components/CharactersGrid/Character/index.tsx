@@ -15,25 +15,12 @@ export interface CharacterProps {
   id: number;
 }
 
-const expensiveCalculation = () => {
-  const minDelay = 4;
-  const maxDelay = 10;
-  const delay =
-    Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-
-  const start = Date.now();
-  while (Date.now() - start < delay) {
-    // Loop to force a delay.
-  }
-};
-
 export const CharacterSwapi: React.FC<CharacterProps> = ({
   id,
   sithCounter,
   jedi,
   sith,
 }) => {
-  expensiveCalculation();
   const [character, setCharacter] = useState<Character | undefined>();
 
   // Simulate a complex calculation for the character.
