@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Affiliation, Character } from "../../../entities/character";
 import "./index.css";
@@ -37,7 +37,7 @@ export const CharacterSwapi: React.FC<CharacterProps> = ({
   const [character, setCharacter] = useState<Character | undefined>();
 
   // Simulate a complex calculation for the character.
-  const complexCharacterCalculation = () => {
+  const complexCharacterCalculation = useCallback(() => {
     const minDelay = 4;
     const maxDelay = 10;
     const delay =
@@ -49,10 +49,15 @@ export const CharacterSwapi: React.FC<CharacterProps> = ({
     }
 
     return id <= sithCounter ? sith : jedi;
-  };
+  }, [sithCounter, jedi?.id, sith?.id]);
+  const characterHardToGet = useMemo(complexCharacterCalculation, [
+    sithCounter,
+    jedi?.id,
+    sith?.id,
+  ]);
 
   useEffect(() => {
-    setCharacter(complexCharacterCalculation());
+    setCharacter(characterHardToGet);
   }, [sithCounter]);
 
   const title = character ? character.name : "Loading...";

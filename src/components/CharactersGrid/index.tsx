@@ -11,6 +11,13 @@ interface GridSwapiCharactersProps {
   sithCounter: number;
 }
 
+const MemoCharacterSwapi = React.memo(CharacterSwapi, (oldProps, newProps) => {
+  if (oldProps.sithCounter !== newProps.sithCounter) return false;
+  if (oldProps.jedi?.id !== newProps.jedi?.id) return false;
+  if (oldProps.sith?.id !== newProps.sith?.id) return false;
+  return true;
+});
+
 export const CharactersGrid: React.FC<GridSwapiCharactersProps> = ({
   jedis,
   siths,
@@ -33,7 +40,7 @@ export const CharactersGrid: React.FC<GridSwapiCharactersProps> = ({
     <Profiler id={`Character grid`}>
       <div className="gridContainer">
         {gridItems.map((props) => (
-          <CharacterSwapi key={props.id} {...props} />
+          <MemoCharacterSwapi key={props.id} {...props} />
         ))}
       </div>
     </Profiler>
