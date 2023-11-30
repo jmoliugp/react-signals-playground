@@ -3,7 +3,6 @@ import { useOnRender } from "./useOnRender";
 
 interface Props {
   id: string;
-  onRender?: React.ProfilerOnRenderCallback;
   children: React.ReactNode;
   disabled?: boolean;
 }
@@ -11,7 +10,7 @@ interface Props {
 export const Profiler: React.FC<Props> = ({
   children,
   disabled,
-  onRender,
+
   id,
 }) => {
   const { printMetrics } = useOnRender();
@@ -20,13 +19,11 @@ export const Profiler: React.FC<Props> = ({
     return <>{children}</>;
   }
 
-  const onRenderWithPrints: React.ProfilerOnRenderCallback = (...args) => {
+  const onRender: React.ProfilerOnRenderCallback = (...args) =>
     printMetrics(...args);
-    if (onRender) onRender(...args);
-  };
 
   return (
-    <ReactProfiler id={id} onRender={onRenderWithPrints}>
+    <ReactProfiler id={id} onRender={onRender}>
       {children}
     </ReactProfiler>
   );

@@ -9,7 +9,7 @@ export const CharactersGrid: React.FC = () => {
   const gridItems: CharacterProps[] = Array.from(
     { length: GRID_SIZE * GRID_SIZE },
     (_, index) => {
-      const id = index + 1;
+      const id = index;
 
       return { id };
     }
