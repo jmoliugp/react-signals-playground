@@ -29,7 +29,7 @@ const expensiveCalculation = () => {
 export const CharacterSwapi: React.FC<CharacterProps> = ({ id }) => {
   expensiveCalculation();
   const character = computed(() => {
-    const charactersList = (sithCount.value >= id ? siths : jedis).value;
+    const charactersList = (sithCount.value > id ? siths : jedis).value;
     return charactersList[id % charactersList.length];
   }).value;
 
