@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { Affiliation, Character } from "../../../entities/character";
+import { computed } from "@preact/signals-react";
+import { Affiliation } from "../../../entities/character";
+import { jedis, sithCount, siths } from "../../../sharedSignals";
+import { Profiler } from "../../Profiler";
 import "./index.css";
 import jediIcon from "/jediIcon.png";
 import sithIcon from "/sithLogo.png";
 import unknownAvatar from "/unknownAvatar.png";
-import { Profiler } from "../../Profiler";
 
 export interface CharacterProps {
-  jedi?: Character;
-  sith?: Character;
-  sithCounter: number;
   id: number;
 }
 
@@ -27,33 +26,12 @@ const expensiveCalculation = () => {
   }
 };
 
-export const CharacterSwapi: React.FC<CharacterProps> = ({
-  id,
-  sithCounter,
-  jedi,
-  sith,
-}) => {
+export const CharacterSwapi: React.FC<CharacterProps> = ({ id }) => {
   expensiveCalculation();
-  const [character, setCharacter] = useState<Character | undefined>();
-
-  // Simulate a complex calculation for the character.
-  const complexCharacterCalculation = () => {
-    const minDelay = 4;
-    const maxDelay = 10;
-    const delay =
-      Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-
-    const start = Date.now();
-    while (Date.now() - start < delay) {
-      // Loop to force a delay.
-    }
-
-    return id <= sithCounter ? sith : jedi;
-  };
-
-  useEffect(() => {
-    setCharacter(complexCharacterCalculation());
-  }, [sithCounter]);
+  const character = computed(() => {
+    const charactersList = (sithCount.value >= id ? siths : jedis).value;
+    return charactersList[id % charactersList.length];
+  }).value;
 
   const title = character ? character.name : "Loading...";
   const imageSrc = character ? character.image : unknownAvatar;
